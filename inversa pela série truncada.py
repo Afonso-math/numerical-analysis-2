@@ -36,13 +36,22 @@ def compute_inverse_series(A, B_init, k):
         inverse_A += B_init @ np.linalg.matrix_power(I - A @ B_init, j)
     return inverse_A
 
+def erro(A_inv, A):
+    E = A_inv @ A - np.eye(A.shape[0])
+    return np.max(np.sum(np.abs(E), axis=1))
 def main():
     n = int(input("Insira a dimensão da matriz de Hilbert: "))
     iteradas = int(input("Insira o número de iteradas desejado: "))
     A = hilbert_matrix(n)
     B_inicial = B_matrix(A)
     inverted_A = compute_inverse_series(A, B_inicial, iteradas)
+    A_inv_LU = np.linalg.inv(A)
     print(f"Matriz de Hilbert com dimensão {n}: {A}")
-    print(f"Inversa da matriz de Hilbert: {inverted_A}")
+    print(f"Inversa da matriz de Hilbert com série de Neumann: {inverted_A}")
+    print(f"Inversa da matriz de Hilbert com decomposição LU: {A_inv_LU}")
+    erro_serie = erro(inverted_A, A)
+    erro_LU = erro(A_inv_LU, A)
+    print(f"Erro funcional - série de Neumann: {erro_serie}")
+    print(f"Erro funcional - decomposição LU: {erro_LU}")
 
 main()
