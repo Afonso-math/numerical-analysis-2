@@ -42,7 +42,7 @@ def main():
     A = hilbert_matrix(n)
     B_inicial = B_matrix(A)
     inverted_A = compute_inverse_series(A, B_inicial, iteradas)
-    print(f"Matriz de Hilbert com dimensão n: {A}")
+    print(f"Matriz de Hilbert com dimensão {n}: {A}")
     print(f"Inversa da matriz de Hilbert: {inverted_A}")
 
 main()
