@@ -23,7 +23,7 @@ def norm_infinite(A):
     return max_row_sum
 
 def B_matrix(A):
-    alfa = 1 + norm_infinite(A) * norm_infinite(A.T)
+    alfa = 10**(-16) + norm_infinite(A) * norm_infinite(A.T)
     B = A.T / alfa
     return B
 
