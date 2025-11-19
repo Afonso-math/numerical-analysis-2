@@ -23,7 +23,8 @@ def norm_infinite(A):
     return max_row_sum
 
 def B_matrix(A):
-    B = A.T * (norm_infinite(A) / norm_one(A))
+    alfa = 1 + norm_infinite(A) * norm_infinite(A.T)
+    B = A.T / alfa
     return B
 
 def compute_inverse_series(A, B_init, k):
@@ -33,7 +34,6 @@ def compute_inverse_series(A, B_init, k):
 
     for j in range(k + 1):
         inverse_A += B_init @ np.linalg.matrix_power(I - A @ B_init, j)
-
     return inverse_A
 
 def main():
