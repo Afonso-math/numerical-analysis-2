@@ -26,21 +26,22 @@ def B_matrix(A):
     B = A.T * (norm_infinite(A) / norm_one(A))
     return B
 
-def compute_A_inverted(A, B_init, iteradas):
+def compute_inverse_series(A, B_init, k):
     rows, cols = A.shape
     I = np.eye(rows)
-    inverted_A = B_init.copy()
+    inverse_A = np.zeros_like(A)
 
-    for i in range(iteradas):
-        inverted_A = inverted_A @ (2 * I - A @ inverted_A)
-    return inverted_A
+    for j in range(k + 1):
+        inverse_A += B_init @ np.linalg.matrix_power(I - A @ B_init, j)
+
+    return inverse_A
 
 def main():
     n = int(input("Insira a dimensão da matriz de Hilbert: "))
     iteradas = int(input("Insira o número de iteradas desejado: "))
     A = hilbert_matrix(n)
     B_inicial = B_matrix(A)
-    inverted_A = compute_A_inverted(A, B_inicial, iteradas)
+    inverted_A = compute_inverse_series(A, B_inicial, iteradas)
     print(f"Matriz de Hilbert com dimensão n: {A}")
     print(f"Inversa da matriz de Hilbert: {inverted_A}")
 
